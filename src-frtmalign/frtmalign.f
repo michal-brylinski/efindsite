@@ -229,7 +229,7 @@ cccc Rotation matrix
           r_2(3,L)=ztm1(i)
         enddo
         if(L.gt.3)then
-           call u3b(w,r_1,r_2,L,1,rms,u,t,ier) !u rotate r_1 to r_2
+           call qcp(w,r_1,r_2,L,1,rms,u,t,ier) !u rotate r_1 to r_2
         endif
 
 c Get results back
@@ -593,7 +593,7 @@ cccc  RMSD:
        ssa=float(iss)/float(n_al)
        ssan=float(issn)/float(n_al)
 
-       call u3b(w,r_1,r_2,n_al,1,rms,u,t,ier)  !u rotate r_1 to r_2
+       call qcp(w,r_1,r_2,n_al,1,rms,u,t,ier)  !u rotate r_1 to r_2
        GL1=0.0
        do i=1,n_al
           dis2(i)=0.0
@@ -627,7 +627,7 @@ cccc  RMSD:
       endif
        L=j
 
-       call u3b (w,r_1,r_2,L,1,rms,u,t,ier)  !u rotate r_1 to r_2
+       call qcp (w,r_1,r_2,L,1,rms,u,t,ier)  !u rotate r_1 to r_2
 
        GL2=0.0
        do i=1,n_al
@@ -659,7 +659,7 @@ cccc  RMSD:
       endif
        L=j
 
-       call u3b (w,r_1,r_2,L,1,rms,u,t,ier)  !u rotate r_1 to r_2
+       call qcp (w,r_1,r_2,L,1,rms,u,t,ier)  !u rotate r_1 to r_2
 
        GL3=0.0
        do i=1,n_al
@@ -1459,7 +1459,7 @@ cccc  calculate RMSD between aligned structures and rotate the structures -->
       enddo
 
 cccc  calculate score matrix score(i,j)------------------>
-      call u3b(w,r_1,r_2,n_al,1,rms,u,t,ier) !u rotate r_1 to r_2
+      call qcp(w,r_1,r_2,n_al,1,rms,u,t,ier) !u rotate r_1 to r_2
       
       d0_min=0.5
       d01=dx+1.5
@@ -1544,7 +1544,7 @@ cccc protein 1 or r_1 is need to rotated since in previous the rotation is for a
             r_2(3,i)=ztm1(i)
         enddo
 
-        call u3b(w,r_1,r_2,n_al,1,rms,u,t,ier) !u rotate r_1 to r_2
+        call qcp(w,r_1,r_2,n_al,1,rms,u,t,ier) !u rotate r_1 to r_2
 
           do i=1,nseq1
             xx=real(t(1)+u(1,1)*xa(1,i,0)+u(1,2)*xa(2,i,0)+
@@ -1748,7 +1748,7 @@ c      if (isearch.gt.2) write(*,*)iL_max,score_max,d0_search,d0
                           k_ali(ka)=k
                       enddo
 
-                    call u3b(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
+                    call qcp(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
 
                     if(i_init.eq.1)then  !global superposition
                      armsd=real(dsqrt(rms/LL))
@@ -1791,7 +1791,7 @@ cccc  iteration for extending
                         k_ali(ka)=m
                         LL=LL+1
                     enddo
-                    call u3b(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
+                    call qcp(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
 
                     do j=1,nseqA
                      xt(j)=real(t(1)+u(1,1)*xa(j)+u(1,2)*ya(j)+
@@ -1840,7 +1840,7 @@ cccc  return the final rotation with rotated (xtm1 or x1)
          LL=LL+1
       enddo
 
-      call u3b(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
+      call qcp(w,r_1,r_2,LL,1,rms,u,t,ier) !u rotate r_1 to r_2
 
       do j=1,nseqA
          x1(j)=real(t(1)+u(1,1)*xa(j)+u(1,2)*ya(j)+u(1,3)*za(j))
