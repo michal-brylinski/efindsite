@@ -40,6 +40,8 @@
 
 CXX = g++
 
+CC = gcc
+
 FC = gfortran
 
 EXE = efindsite efindsite_screen
@@ -50,8 +52,11 @@ SRC_DBSCAN    = src-dbscan
 SRC_FRTMALIGN = src-frtmalign
 SRC_LIBSVM    = src-libsvm
 SRC_NWALIGN   = src-nwalign
+SRC_QCPROT    = src-qcprot
 
-CPPFLAGS = -O2 -Wall -Wno-write-strings -fPIC -fopenmp -I. -I$(SRC_EFINDSITE) -I$(SRC_DBSCAN) -I$(SRC_GZSTREAM) -I$(SRC_FRTMALIGN) -I$(SRC_LIBSVM) -I$(SRC_NWALIGN)
+CPPFLAGS = -O2 -Wall -Wno-write-strings -fPIC -fopenmp -I. -I$(SRC_EFINDSITE) -I$(SRC_DBSCAN) -I$(SRC_GZSTREAM) -I$(SRC_FRTMALIGN) -I$(SRC_LIBSVM) -I$(SRC_NWALIGN) -I$(SRC_QCPROT)
+
+CCFLAGS = -O2 -Wall -ffast-math -pedantic -std=c99
 
 FFLAGS = -O2
 
@@ -76,7 +81,9 @@ OBJ_EFINDSITE = $(SRC_EFINDSITE)/cluster.o \
                 $(SRC_FRTMALIGN)/frtmalign.o \
                 $(SRC_GZSTREAM)/gzstream.o \
                 $(SRC_LIBSVM)/svm.o \
-                $(SRC_NWALIGN)/nwalign.o
+                $(SRC_NWALIGN)/nwalign.o \
+                $(SRC_QCPROT)/qcprot.o \
+                $(SRC_QCPROT)/rmsd_qcp.o
 
 OBJ_EFINDSITE_SCREEN = $(SRC_EFINDSITE)/efindsite_screen.o \
                        $(SRC_EFINDSITE)/runsvm.o \
@@ -121,9 +128,6 @@ efindsite_screen.o: efindsite_screen.C
 
 list.o: list.C
 	$(CXX) $(CPPFLAGS) -c -o list.o list.C
-
-mustang.o: mustang.C
-	$(CXX) $(CPPFLAGS) -c -o mustang.o mustang.C
 
 pocket.o: pocket.C
 	$(CXX) $(CPPFLAGS) -c -o pocket.o pocket.C
@@ -176,6 +180,14 @@ svm.o: svm.C
 
 nwalign.o: nwalign.f
 	$(FC) $(FFLAGS) -c -o nwalign.o nwalign.f
+
+#=== qcprot ====================================================================
+
+qcprot.o: qcprot.c
+	$(CC) $(CCFLAGS) -c -o qcprot.o qcprot.c
+
+rmsd_qcp.o: rmsd_qcp.c
+	$(CC) $(CCFLAGS) -c -o rmsd_qcp.o rmsd_qcp.c
 
 #=== clean =====================================================================
 
