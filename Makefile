@@ -91,10 +91,12 @@ all: $(EXE)
 
 efindsite: $(OBJ_EFINDSITE)
 	$(CXX) -o $@ $(OBJ_EFINDSITE) $(LDFLAGS)
+	@mkdir -p bin/
 	@mv efindsite bin/
 
 efindsite_screen: $(OBJ_EFINDSITE_SCREEN)
 	$(CXX) -o $@ $(OBJ_EFINDSITE_SCREEN) $(LDFLAGS)
+	@mkdir -p bin/
 	@mv efindsite_screen bin/
 
 #=== eFindSite =================================================================
