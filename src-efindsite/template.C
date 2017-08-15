@@ -746,13 +746,14 @@ void Template::dumpProtein( std::string p1_name, bool p1_align )
    for ( int ipc1 = 0; ipc1 < 3; ipc1++ )
     xyz1[ipc1] = (*p1_i).getCoords(ipc1+1);
   
-  outprot << "ATOM  " << setw(5) << (*p1_i).getAtomNumber()
-                      << setw(5) << (*p1_i).getAtomName()
-                      << setw(4) << (*p1_i).getResidueName()
-                      << setw(6) << (*p1_i).getResidueNumber()
-                      << fixed << setw(12) << setprecision(3) << xyz1[0]
-                      << fixed << setw(8)  << setprecision(3) << xyz1[1]
-                      << fixed << setw(8)  << setprecision(3) << xyz1[2] << endl;
+  if ( (*p1_i).getAtomName() == " CA " )
+   outprot << "ATOM  " << setw(5) << (*p1_i).getAtomNumber()
+                       << setw(5) << (*p1_i).getAtomName()
+                       << setw(4) << (*p1_i).getResidueName()
+                       << setw(6) << (*p1_i).getResidueNumber()
+                       << fixed << setw(12) << setprecision(3) << xyz1[0]
+                       << fixed << setw(8)  << setprecision(3) << xyz1[1]
+                       << fixed << setw(8)  << setprecision(3) << xyz1[2] << endl;
  }
  
  outprot << "TER" << endl;

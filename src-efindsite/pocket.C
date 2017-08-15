@@ -78,6 +78,9 @@ Pocket::Pocket( int an )
  
  _svm_confidence = 0.0;
  
+ _druggability_score = 0.0;
+ _druggable = false;
+ 
  _complexes.clear();
  _binding_res.clear();
  
@@ -126,6 +129,9 @@ Pocket::Pocket( void )
  _ave_bres = 0.0;
  
  _svm_confidence = 0.0;
+ 
+ _druggability_score = 0.0;
+ _druggable = false;
  
  _complexes.clear();
  _binding_res.clear();
@@ -877,6 +883,95 @@ void Pocket::setCenter( double tres1, double tdis1 )
 }
 
 
+// ==================================================================================   calculateDruggability
+
+void Pocket::calculateDruggability( std::string d_model, double tres1, double tdrg1 )
+{
+ double d_weights_lr[7]  = { -8.26665041, 1.18214442, 0.37790611, 0.77567315, 1.8916566, 2.95634822, 1.24761869 };
+ double d_weights_lda[7] = { -8.26665041, 1.18214442, 0.37790611, 0.77567315, 1.8916566, 2.95634822, 1.24761869 };
+ 
+ double d_features[6];
+ 
+ d_features[0] = _pocket_fraction;
+ d_features[1] = log(_complexes.size());
+ d_features[2] = log(_binres_tot);
+ d_features[3] = _plb;
+ d_features[4] = _svm_confidence;
+ d_features[5] = 0.0;
+ 
+ int nres1 = 0;
+ 
+ map<int,binding_residue>::iterator itpl1;
+ 
+ for ( itpl1 = _binding_res.begin() ; itpl1 != _binding_res.end(); itpl1++ )
+  if ( ((*itpl1).second).residue_score >= tres1 )
+  {
+        if ( ((*itpl1).second).residue_code == "A" ) d_features[5] += ( 1.8);
+   else if ( ((*itpl1).second).residue_code == "R" ) d_features[5] += (-4.5);
+   else if ( ((*itpl1).second).residue_code == "N" ) d_features[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "D" ) d_features[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "C" ) d_features[5] += ( 2.5);
+   else if ( ((*itpl1).second).residue_code == "Q" ) d_features[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "E" ) d_features[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "G" ) d_features[5] += (-0.4);
+   else if ( ((*itpl1).second).residue_code == "H" ) d_features[5] += (-3.2);
+   else if ( ((*itpl1).second).residue_code == "I" ) d_features[5] += ( 4.5);
+   else if ( ((*itpl1).second).residue_code == "L" ) d_features[5] += ( 3.8);
+   else if ( ((*itpl1).second).residue_code == "K" ) d_features[5] += (-3.9);
+   else if ( ((*itpl1).second).residue_code == "M" ) d_features[5] += ( 1.9);
+   else if ( ((*itpl1).second).residue_code == "F" ) d_features[5] += ( 2.8);
+   else if ( ((*itpl1).second).residue_code == "P" ) d_features[5] += (-1.6);
+   else if ( ((*itpl1).second).residue_code == "S" ) d_features[5] += (-0.8);
+   else if ( ((*itpl1).second).residue_code == "T" ) d_features[5] += (-0.7);
+   else if ( ((*itpl1).second).residue_code == "W" ) d_features[5] += (-0.9);
+   else if ( ((*itpl1).second).residue_code == "Y" ) d_features[5] += (-1.3);
+   else if ( ((*itpl1).second).residue_code == "V" ) d_features[5] += ( 4.2);
+   
+   nres1++;
+  }
+ 
+ d_features[5] /= (double) nres1;
+ 
+      if ( d_model == "R" )
+ {
+  _druggability_score = d_weights_lr[0];
+  
+  for ( int i = 0; i < 6; i++ )
+    _druggability_score += d_weights_lr[i+1] * d_features[i];
+ }
+ else if ( d_model == "A" )
+ {
+  _druggability_score = d_weights_lda[0];
+  
+  for ( int i = 0; i < 6; i++ )
+    _druggability_score += d_weights_lda[i+1] * d_features[i];
+ }
+ 
+ _druggability_score = 1.0 / ( 1.0 + exp( -1.0 * _druggability_score ) );
+ 
+ if ( _druggability_score >= tdrg1 )
+  _druggable = true;
+ else
+  _druggable = false;
+}
+
+
+// ==================================================================================   getDruggabilityScore
+
+double Pocket::getDruggabilityScore( void )
+{
+ return _druggability_score;
+}
+
+
+// ==================================================================================   getDruggable
+
+bool Pocket::getDruggable( void )
+{
+ return _druggable;
+}
+
+
 // ==================================================================================   dumpProteinAlignments
 
 void Pocket::dumpProteinAlignments( std::string c1_name, map<string,bool> &chk2, Target * target2 )
@@ -1045,6 +1140,15 @@ void Pocket::dumpPocket( std::string p1_name, Target * target3, double tres1, in
  }
  
  outpkt2 << "PLBINDEX" << fixed << setw(6) << setprecision(3) << _plb << endl;
+ 
+ std::string drug1;
+ 
+ if ( _druggable )
+  drug1 = "D";
+ else
+  drug1 = "N";
+ 
+ outpkt2 << "DRUGGABILITY" << fixed << setw(6) << setprecision(3) << _druggability_score << " " << drug1 << endl;
  
  outpkt2 << "AUXLIG" << fixed << setw(8) << setprecision(4) << _svm_cmps << endl;
  

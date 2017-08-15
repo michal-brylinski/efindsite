@@ -145,6 +145,9 @@ class Pocket {
     
     double                   _svm_confidence;           // svm confidence index
     
+    double                   _druggability_score;       // pocket druggability score
+    bool                     _druggable;                // druggable
+    
   public:
     
     Pocket( int );
@@ -176,6 +179,12 @@ class Pocket {
     double getConfidence( void );
     
     void setCenter( double, double );
+    
+    void calculateDruggability( std::string, double, double );
+    
+    double getDruggabilityScore( void );
+    
+    bool getDruggable( void );
     
     void dumpProteinAlignments( std::string, map<string,bool> &, Target * );
     

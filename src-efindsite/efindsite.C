@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
  double       cut_clustlig  = 0.70;
  std::string  met_clustlig  = "T";
  std::string  met_clustdis  = "D";
+ std::string  met_druggabl  = "R";
+ double       cut_druggabl  = 0.0;
  
  cout << "------------------------------------------------------------" << endl
       << "                         efindsite" << endl
@@ -89,7 +91,11 @@ int main(int argc, char *argv[])
        << "           -c <fingerprint clustering method (default T)>" << endl
        << "               T - classical Tanimoto coeff" << endl
        << "               A - average Tanimoto coeff" << endl
-       << "           -f <fingerprint clustering cutoff (default 0.7 for T and A)>" << endl << endl;
+       << "           -f <fingerprint clustering cutoff (default 0.7 for T and A)>" << endl
+       << "           -u <druggability model (default R)>" << endl
+       << "               R - logistic regression" << endl
+       << "               A - linear discriminant analysis" << endl
+       << "           -y <druggability cutoff (default 0.7 for R and 0.7 for A)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
  }
@@ -109,6 +115,8 @@ int main(int argc, char *argv[])
  string cmps_name;
  bool cmps_opt = false;
  
+ bool drug_opt = false;
+ 
  for ( int i = 0; i < argc; i++ )
  {
   if ( !strcmp(argv[i],"-s") && i < argc ) { target_name    = string(argv[i+1]); target_opt    = true; }
@@ -126,6 +134,8 @@ int main(int argc, char *argv[])
   if ( !strcmp(argv[i],"-f") && i < argc ) { cut_clustlig   = atof(argv[i+1]);                         }
   if ( !strcmp(argv[i],"-c") && i < argc ) { met_clustlig   = string(argv[i+1]);                       }
   if ( !strcmp(argv[i],"-d") && i < argc ) { cut_clustdis   = atof(argv[i+1]);                         }
+  if ( !strcmp(argv[i],"-u") && i < argc ) { met_druggabl   = string(argv[i+1]);                       }
+  if ( !strcmp(argv[i],"-y") && i < argc ) { cut_druggabl   = atof(argv[i+1]);;  drug_opt      = true; }
  }
  
  char * path1;
@@ -277,6 +287,50 @@ int main(int argc, char *argv[])
   cout << "!!! Max number of templates must be >0, setting to " << MAXTPL << " !!!" << endl << endl;
   
   cut_templates = MAXTPL;
+ }
+ 
+ if ( met_druggabl != "R" && met_druggabl != "A" )
+ {
+  cout << "!!! Druggability model must be either R or A, setting to R !!!" << endl << endl;
+  
+  met_druggabl = "R";
+ }
+ 
+ if ( drug_opt )
+ {
+  if ( cut_druggabl < ( 1 / 1e6 ) )
+  {
+   double cut_t = 0.0;
+   
+   if ( met_druggabl == "R" )
+    cut_t = 0.5;
+   else
+    cut_t = 0.4;
+   
+   cout << "!!! Threshold for druggability must be >0, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
+   
+   cut_druggabl = cut_t;
+  }
+  else if ( cut_druggabl > 1 )
+  {
+   double cut_t = 0.0;
+   
+   if ( met_druggabl == "R" )
+    cut_t = 0.5;
+   else
+    cut_t = 0.4;
+   
+   cout << "!!! Threshold for druggability must be <=1, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
+   
+   cut_druggabl = cut_t;
+  }
+ }
+ else
+ {
+  if ( met_druggabl == "R" )
+   cut_druggabl = 0.5;
+  else
+   cut_druggabl = 0.4;
  }
  
  /* target protein */
@@ -676,18 +730,28 @@ int main(int argc, char *argv[])
  time(&t_bench1);
  
  double rank1 = 0.0;
+ std::string rank3;
  
  for ( ipkt1 = pocket_set_filtered.begin(); ipkt1 != pocket_set_filtered.end(); ipkt1++ )
  {
   double rank2 = (*ipkt1)->calculateConfidence( cmps_opt, model_svm );
   
+  (*ipkt1)->calculateDruggability( met_druggabl, cut_binrest, cut_druggabl );
+  
   if ( rank2 > rank1 )
+  {
    rank1 = rank2;
+   
+   if ( (*ipkt1)->getDruggable() )
+    rank3 = "druggable";
+   else
+    rank3 = "non-druggable";
+  }
  }
  
  time(&t_bench2);
  
- cout << "top-ranked pocket has a confidence index of " << fixed << setprecision(1) << rank1 * 100 << "% (" << fixed << setprecision(0) << difftime(t_bench2, t_bench1) << " s)" << endl << endl;
+ cout << "top-ranked pocket has a confidence index of " << fixed << setprecision(1) << rank1 * 100 << "% and is " << rank3 << " (" << fixed << setprecision(0) << difftime(t_bench2, t_bench1) << " s)" << endl << endl;
  
  multimap<double,Pocket *> pocket_map_sorted;
  
