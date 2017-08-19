@@ -316,9 +316,9 @@ int main(int argc, char *argv[])
    double cut_t = 0.0;
    
    if ( met_druggabl == "R" )
-    cut_t = 0.5;
+    cut_t = 0.7;
    else
-    cut_t = 0.4;
+    cut_t = 0.7;
    
    cout << "!!! Threshold for druggability must be <=1, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
    
@@ -328,9 +328,9 @@ int main(int argc, char *argv[])
  else
  {
   if ( met_druggabl == "R" )
-   cut_druggabl = 0.5;
+   cut_druggabl = 0.7;
   else
-   cut_druggabl = 0.4;
+   cut_druggabl = 0.7;
  }
  
  /* target protein */
