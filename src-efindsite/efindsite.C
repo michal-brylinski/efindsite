@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
        << "           -u <druggability model (default R)>" << endl
        << "               R - logistic regression" << endl
        << "               A - linear discriminant analysis" << endl
-       << "           -y <druggability cutoff (default 0.7 for R and 0.7 for A)>" << endl << endl;
+       << "           -y <druggability cutoff (default 0.7)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
  }
