@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
        << "           -c <fingerprint clustering method (default T)>" << endl
        << "               T - classical Tanimoto coeff" << endl
        << "               A - average Tanimoto coeff" << endl
-       << "           -f <fingerprint clustering cutoff (default 0.7 for T and A)>" << endl
+       << "           -f <fingerprint clustering cutoff (default 0.7)>" << endl
        << "           -u <druggability model (default R)>" << endl
        << "               R - logistic regression" << endl
        << "               D - linear discriminant analysis" << endl

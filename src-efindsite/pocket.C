@@ -939,7 +939,7 @@ void Pocket::calculateDruggability( std::string d_model, double tres1, double td
   for ( int i = 0; i < 6; i++ )
     _druggability_score += d_weights_lr[i+1] * d_features[i];
  }
- else if ( d_model == "A" )
+ else if ( d_model == "D" )
  {
   _druggability_score = d_weights_lda[0];
   
