@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
        << "           -f <fingerprint clustering cutoff (default 0.7 for T and A)>" << endl
        << "           -u <druggability model (default R)>" << endl
        << "               R - logistic regression" << endl
-       << "               A - linear discriminant analysis" << endl
-       << "           -y <druggability cutoff (default 0.7)>" << endl << endl;
+       << "               D - linear discriminant analysis" << endl
+       << "           -y <druggability cutoff (default 0.6)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
  }
@@ -289,9 +289,9 @@ int main(int argc, char *argv[])
   cut_templates = MAXTPL;
  }
  
- if ( met_druggabl != "R" && met_druggabl != "A" )
+ if ( met_druggabl != "R" && met_druggabl != "D" )
  {
-  cout << "!!! Druggability model must be either R or A, setting to R !!!" << endl << endl;
+  cout << "!!! Druggability model must be either R or D, setting to R !!!" << endl << endl;
   
   met_druggabl = "R";
  }
@@ -303,9 +303,9 @@ int main(int argc, char *argv[])
    double cut_t = 0.0;
    
    if ( met_druggabl == "R" )
-    cut_t = 0.5;
+    cut_t = 0.6;
    else
-    cut_t = 0.4;
+    cut_t = 0.6;
    
    cout << "!!! Threshold for druggability must be >0, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
    
@@ -316,9 +316,9 @@ int main(int argc, char *argv[])
    double cut_t = 0.0;
    
    if ( met_druggabl == "R" )
-    cut_t = 0.7;
+    cut_t = 0.6;
    else
-    cut_t = 0.7;
+    cut_t = 0.6;
    
    cout << "!!! Threshold for druggability must be <=1, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
    
@@ -328,9 +328,9 @@ int main(int argc, char *argv[])
  else
  {
   if ( met_druggabl == "R" )
-   cut_druggabl = 0.7;
+   cut_druggabl = 0.6;
   else
-   cut_druggabl = 0.7;
+   cut_druggabl = 0.6;
  }
  
  /* target protein */
