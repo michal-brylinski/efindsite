@@ -888,7 +888,7 @@ void Pocket::setCenter( double tres1, double tdis1 )
 void Pocket::calculateDruggability( std::string d_model, double tres1, double tdrg1 )
 {
  double d_weights_lr[7]  = { -8.513900, 1.182144, 0.377906, 0.775673, 1.891657, 2.956348, 1.247619 };
- double d_weights_lda[7] = { -4.557446, 0.838787, 0.187473, 0.115758, 0.946232, 2.753960, 0.699665 };
+ double d_weights_lda[7] = { -9.020919, 1.692372, 0.365726, 0.265965, 1.958943, 5.155119, 1.381207 };
  
  double d_features[6];
  
