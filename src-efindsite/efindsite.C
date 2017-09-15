@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
        << "           -u <druggability model (default R)>" << endl
        << "               R - logistic regression" << endl
        << "               D - linear discriminant analysis" << endl
-       << "           -y <druggability cutoff (default 0.6)>" << endl << endl;
+       << "           -y <druggability cutoff (default 0.5)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
  }
@@ -303,9 +303,9 @@ int main(int argc, char *argv[])
    double cut_t = 0.0;
    
    if ( met_druggabl == "R" )
-    cut_t = 0.6;
+    cut_t = 0.5;
    else
-    cut_t = 0.6;
+    cut_t = 0.5;
    
    cout << "!!! Threshold for druggability must be >0, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
    
@@ -316,9 +316,9 @@ int main(int argc, char *argv[])
    double cut_t = 0.0;
    
    if ( met_druggabl == "R" )
-    cut_t = 0.6;
+    cut_t = 0.5;
    else
-    cut_t = 0.6;
+    cut_t = 0.5;
    
    cout << "!!! Threshold for druggability must be <=1, setting to " << setprecision(2) << cut_t << " !!!" << endl << endl;
    
@@ -328,9 +328,9 @@ int main(int argc, char *argv[])
  else
  {
   if ( met_druggabl == "R" )
-   cut_druggabl = 0.6;
+   cut_druggabl = 0.5;
   else
-   cut_druggabl = 0.6;
+   cut_druggabl = 0.5;
  }
  
  /* target protein */
