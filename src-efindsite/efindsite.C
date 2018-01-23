@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
  double       cut_clustlig  = 0.70;
  std::string  met_clustlig  = "T";
  std::string  met_clustdis  = "D";
- std::string  met_druggabl  = "R";
+ std::string  met_druggabl  = "R2";
  double       cut_druggabl  = 0.0;
  
  cout << "------------------------------------------------------------" << endl
@@ -92,9 +92,11 @@ int main(int argc, char *argv[])
        << "               T - classical Tanimoto coeff" << endl
        << "               A - average Tanimoto coeff" << endl
        << "           -f <fingerprint clustering cutoff (default 0.7)>" << endl
-       << "           -u <druggability model (default R)>" << endl
-       << "               R - logistic regression" << endl
-       << "               D - linear discriminant analysis" << endl
+       << "           -u <druggability model (default R2)>" << endl
+       << "               R1 - logistic regression, model 1" << endl
+       << "               D1 - linear discriminant analysis, model 1" << endl
+       << "               R2 - logistic regression, model 2" << endl
+       << "               D2 - linear discriminant analysis, model 2" << endl
        << "           -y <druggability cutoff (default 0.5)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
@@ -289,11 +291,11 @@ int main(int argc, char *argv[])
   cut_templates = MAXTPL;
  }
  
- if ( met_druggabl != "R" && met_druggabl != "D" )
+ if ( met_druggabl != "R1" && met_druggabl != "D1" && met_druggabl != "R2" && met_druggabl != "D2" )
  {
-  cout << "!!! Druggability model must be either R or D, setting to R !!!" << endl << endl;
+  cout << "!!! Druggability model must be either R1, D1, R2 or D2, setting to R2 !!!" << endl << endl;
   
-  met_druggabl = "R";
+  met_druggabl = "R2";
  }
  
  if ( drug_opt )
@@ -302,7 +304,11 @@ int main(int argc, char *argv[])
   {
    double cut_t = 0.0;
    
-   if ( met_druggabl == "R" )
+        if ( met_druggabl == "R1" )
+    cut_t = 0.5;
+   else if ( met_druggabl == "D1" )
+    cut_t = 0.5;
+   else if ( met_druggabl == "R2" )
     cut_t = 0.5;
    else
     cut_t = 0.5;
@@ -315,7 +321,11 @@ int main(int argc, char *argv[])
   {
    double cut_t = 0.0;
    
-   if ( met_druggabl == "R" )
+        if ( met_druggabl == "R1" )
+    cut_t = 0.5;
+   else if ( met_druggabl == "D1" )
+    cut_t = 0.5;
+   else if ( met_druggabl == "R2" )
     cut_t = 0.5;
    else
     cut_t = 0.5;
@@ -327,7 +337,11 @@ int main(int argc, char *argv[])
  }
  else
  {
-  if ( met_druggabl == "R" )
+       if ( met_druggabl == "R1" )
+   cut_druggabl = 0.5;
+  else if ( met_druggabl == "D1" )
+   cut_druggabl = 0.5;
+  else if ( met_druggabl == "R2" )
    cut_druggabl = 0.5;
   else
    cut_druggabl = 0.5;

@@ -887,17 +887,28 @@ void Pocket::setCenter( double tres1, double tdis1 )
 
 void Pocket::calculateDruggability( std::string d_model, double tres1, double tdrg1 )
 {
- double d_weights_lr[7]  = { -8.513900, 1.182144, 0.377906, 0.775673, 1.891657, 2.956348, 1.247619 };
- double d_weights_lda[7] = { -9.020919, 1.692372, 0.365726, 0.265965, 1.958943, 5.155119, 1.381207 };
+ double d_weights_lr_1[7]  = { -8.26665041, 1.18214442, 0.37790611, 0.77567315, 1.89165660, 2.95634822, 1.24761869 };
+ double d_weights_lda_1[7] = { -8.70928835, 1.69237206, 0.36572605, 0.26596515, 1.95894270, 5.15511862, 1.38120707 };
  
- double d_features[6];
+ double d_weights_lr_2[6]  = { -3.94539091, 1.37349239, 0.36712532, 0.40756366, 1.33157486, 0.3987273};
+ double d_weights_lda_2[6] = { -3.51464557, 1.66592641, 0.34315226, 0.26098489, 1.33529915, 0.4139496};
  
- d_features[0] = _pocket_fraction;
- d_features[1] = log(_complexes.size());
- d_features[2] = log(_binres_tot);
- d_features[3] = _plb;
- d_features[4] = _svm_confidence;
- d_features[5] = 0.0;
+ double d_features_1[6];
+ 
+ d_features_1[0] = _pocket_fraction;
+ d_features_1[1] = log(_complexes.size());
+ d_features_1[2] = log(_binres_tot);
+ d_features_1[3] = _plb;
+ d_features_1[4] = _svm_confidence;
+ d_features_1[5] = 0.0;
+ 
+ double d_features_2[5];
+ 
+ d_features_2[0] = _pocket_fraction;
+ d_features_2[1] = log(_complexes.size());
+ d_features_2[2] = log(_binres_tot);
+ d_features_2[3] = 0.0;
+ d_features_2[4] = 0.0;
  
  int nres1 = 0;
  
@@ -906,45 +917,64 @@ void Pocket::calculateDruggability( std::string d_model, double tres1, double td
  for ( itpl1 = _binding_res.begin() ; itpl1 != _binding_res.end(); itpl1++ )
   if ( ((*itpl1).second).residue_score >= tres1 )
   {
-        if ( ((*itpl1).second).residue_code == "A" ) d_features[5] += ( 1.8);
-   else if ( ((*itpl1).second).residue_code == "R" ) d_features[5] += (-4.5);
-   else if ( ((*itpl1).second).residue_code == "N" ) d_features[5] += (-3.5);
-   else if ( ((*itpl1).second).residue_code == "D" ) d_features[5] += (-3.5);
-   else if ( ((*itpl1).second).residue_code == "C" ) d_features[5] += ( 2.5);
-   else if ( ((*itpl1).second).residue_code == "Q" ) d_features[5] += (-3.5);
-   else if ( ((*itpl1).second).residue_code == "E" ) d_features[5] += (-3.5);
-   else if ( ((*itpl1).second).residue_code == "G" ) d_features[5] += (-0.4);
-   else if ( ((*itpl1).second).residue_code == "H" ) d_features[5] += (-3.2);
-   else if ( ((*itpl1).second).residue_code == "I" ) d_features[5] += ( 4.5);
-   else if ( ((*itpl1).second).residue_code == "L" ) d_features[5] += ( 3.8);
-   else if ( ((*itpl1).second).residue_code == "K" ) d_features[5] += (-3.9);
-   else if ( ((*itpl1).second).residue_code == "M" ) d_features[5] += ( 1.9);
-   else if ( ((*itpl1).second).residue_code == "F" ) d_features[5] += ( 2.8);
-   else if ( ((*itpl1).second).residue_code == "P" ) d_features[5] += (-1.6);
-   else if ( ((*itpl1).second).residue_code == "S" ) d_features[5] += (-0.8);
-   else if ( ((*itpl1).second).residue_code == "T" ) d_features[5] += (-0.7);
-   else if ( ((*itpl1).second).residue_code == "W" ) d_features[5] += (-0.9);
-   else if ( ((*itpl1).second).residue_code == "Y" ) d_features[5] += (-1.3);
-   else if ( ((*itpl1).second).residue_code == "V" ) d_features[5] += ( 4.2);
+        if ( ((*itpl1).second).residue_code == "A" ) d_features_1[5] += ( 1.8);
+   else if ( ((*itpl1).second).residue_code == "R" ) d_features_1[5] += (-4.5);
+   else if ( ((*itpl1).second).residue_code == "N" ) d_features_1[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "D" ) d_features_1[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "C" ) d_features_1[5] += ( 2.5);
+   else if ( ((*itpl1).second).residue_code == "Q" ) d_features_1[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "E" ) d_features_1[5] += (-3.5);
+   else if ( ((*itpl1).second).residue_code == "G" ) d_features_1[5] += (-0.4);
+   else if ( ((*itpl1).second).residue_code == "H" ) d_features_1[5] += (-3.2);
+   else if ( ((*itpl1).second).residue_code == "I" ) d_features_1[5] += ( 4.5);
+   else if ( ((*itpl1).second).residue_code == "L" ) d_features_1[5] += ( 3.8);
+   else if ( ((*itpl1).second).residue_code == "K" ) d_features_1[5] += (-3.9);
+   else if ( ((*itpl1).second).residue_code == "M" ) d_features_1[5] += ( 1.9);
+   else if ( ((*itpl1).second).residue_code == "F" ) d_features_1[5] += ( 2.8);
+   else if ( ((*itpl1).second).residue_code == "P" ) d_features_1[5] += (-1.6);
+   else if ( ((*itpl1).second).residue_code == "S" ) d_features_1[5] += (-0.8);
+   else if ( ((*itpl1).second).residue_code == "T" ) d_features_1[5] += (-0.7);
+   else if ( ((*itpl1).second).residue_code == "W" ) d_features_1[5] += (-0.9);
+   else if ( ((*itpl1).second).residue_code == "Y" ) d_features_1[5] += (-1.3);
+   else if ( ((*itpl1).second).residue_code == "V" ) d_features_1[5] += ( 4.2);
+   
+   if ( ((*itpl1).second).residue_code == "F" || ((*itpl1).second).residue_code == "Y" || ((*itpl1).second).residue_code == "W" || ((*itpl1).second).residue_code == "H" )
+    d_features_2[4] += ((*itpl1).second).residue_score;
    
    nres1++;
   }
  
- d_features[5] /= (double) nres1;
+ d_features_1[5] /= (double) nres1;
  
-      if ( d_model == "R" )
+ d_features_2[3] = d_features_1[5];
+ 
+      if ( d_model == "R1" )
  {
-  _druggability_score = d_weights_lr[0];
-  
+  _druggability_score = d_weights_lr_1[0];
+ 
   for ( int i = 0; i < 6; i++ )
-    _druggability_score += d_weights_lr[i+1] * d_features[i];
+    _druggability_score += d_weights_lr_1[i+1] * d_features_1[i];
  }
- else if ( d_model == "D" )
+ else if ( d_model == "D1" )
  {
-  _druggability_score = d_weights_lda[0];
-  
+  _druggability_score = d_weights_lda_1[0];
+ 
   for ( int i = 0; i < 6; i++ )
-    _druggability_score += d_weights_lda[i+1] * d_features[i];
+    _druggability_score += d_weights_lda_1[i+1] * d_features_1[i];
+ }
+ else if ( d_model == "R2" )
+ {
+  _druggability_score = d_weights_lr_2[0];
+ 
+  for ( int i = 0; i < 5; i++ )
+    _druggability_score += d_weights_lr_2[i+1] * d_features_2[i];
+ }
+ else if ( d_model == "D2" )
+ {
+  _druggability_score = d_weights_lda_2[0];
+ 
+  for ( int i = 0; i < 5; i++ )
+    _druggability_score += d_weights_lda_2[i+1] * d_features_2[i];
  }
  
  _druggability_score = 1.0 / ( 1.0 + exp( -1.0 * _druggability_score ) );
