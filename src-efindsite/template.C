@@ -722,7 +722,7 @@ void Template::getBindingResidues( int lig1, list<lig_binding> &res1 )
 
 // ==================================================================================   dumpProtein
 
-void Template::dumpProtein( std::string p1_name, bool p1_align )
+void Template::dumpProtein( std::string p1_name, bool p1_align, bool p1_atoms )
 {
  vector<CoordsProtein>::iterator p1_i;
  
@@ -746,7 +746,7 @@ void Template::dumpProtein( std::string p1_name, bool p1_align )
    for ( int ipc1 = 0; ipc1 < 3; ipc1++ )
     xyz1[ipc1] = (*p1_i).getCoords(ipc1+1);
   
-  if ( (*p1_i).getAtomName() == " CA " )
+  if ( p1_atoms || (*p1_i).getAtomName() == " CA " )
    outprot << "ATOM  " << setw(5) << (*p1_i).getAtomNumber()
                        << setw(5) << (*p1_i).getAtomName()
                        << setw(4) << (*p1_i).getResidueName()

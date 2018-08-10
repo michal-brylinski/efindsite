@@ -186,7 +186,7 @@ class Pocket {
     
     bool getDruggable( void );
     
-    void dumpProteinAlignments( std::string, map<string,bool> &, Target * );
+    void dumpProteinAlignments( std::string, map<string,bool> &, Target *, bool );
     
     void dumpLigands( std::string, map<string,bool> &, int );
     

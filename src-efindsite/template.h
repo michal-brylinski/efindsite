@@ -238,7 +238,7 @@ class Template {
     
     void getBindingResidues( int, list<lig_binding> & );
     
-    void dumpProtein( std::string, bool );
+    void dumpProtein( std::string, bool, bool );
     
     void dumpAlignment( std::string, int, std::string, double [][3] );
     

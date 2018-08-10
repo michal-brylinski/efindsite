@@ -1004,7 +1004,7 @@ bool Pocket::getDruggable( void )
 
 // ==================================================================================   dumpProteinAlignments
 
-void Pocket::dumpProteinAlignments( std::string c1_name, map<string,bool> &chk2, Target * target2 )
+void Pocket::dumpProteinAlignments( std::string c1_name, map<string,bool> &chk2, Target * target2, bool c1_atoms )
 {
  list< Template * >::iterator cipt1;
  
@@ -1015,7 +1015,7 @@ void Pocket::dumpProteinAlignments( std::string c1_name, map<string,bool> &chk2,
     {
      chk2[(*cipt1)->getProteinID()] = true;
      
-     (*cipt1)->dumpProtein( c1_name, true );
+     (*cipt1)->dumpProtein( c1_name, true, c1_atoms );
      
      double tarca1[MAXPRO][3];
      

@@ -97,7 +97,8 @@ int main(int argc, char *argv[])
        << "               D1 - linear discriminant analysis, model 1" << endl
        << "               R2 - logistic regression, model 2" << endl
        << "               D2 - linear discriminant analysis, model 2" << endl
-       << "           -y <druggability cutoff (default 0.5)>" << endl << endl;
+       << "           -y <druggability cutoff (default 0.5)>" << endl
+       << "           -a <output all atoms for templates (default CA only)>" << endl << endl;
   
   exit(EXIT_SUCCESS);
  }
@@ -119,6 +120,8 @@ int main(int argc, char *argv[])
  
  bool drug_opt = false;
  
+ bool all_atoms = false;
+ 
  for ( int i = 0; i < argc; i++ )
  {
   if ( !strcmp(argv[i],"-s") && i < argc ) { target_name    = string(argv[i+1]); target_opt    = true; }
@@ -137,7 +140,8 @@ int main(int argc, char *argv[])
   if ( !strcmp(argv[i],"-c") && i < argc ) { met_clustlig   = string(argv[i+1]);                       }
   if ( !strcmp(argv[i],"-d") && i < argc ) { cut_clustdis   = atof(argv[i+1]);                         }
   if ( !strcmp(argv[i],"-u") && i < argc ) { met_druggabl   = string(argv[i+1]);                       }
-  if ( !strcmp(argv[i],"-y") && i < argc ) { cut_druggabl   = atof(argv[i+1]);;  drug_opt      = true; }
+  if ( !strcmp(argv[i],"-y") && i < argc ) { cut_druggabl   = atof(argv[i+1]);   drug_opt      = true; }
+  if ( !strcmp(argv[i],"-a") && i < argc ) {                                     all_atoms     = true; }
  }
  
  char * path1;
@@ -790,7 +794,7 @@ int main(int argc, char *argv[])
  {
   (*ipkt1)->setCenter( cut_binrest, cut_clustdis );
   
-  (*ipkt1)->dumpProteinAlignments( output_name, chk1, target );
+  (*ipkt1)->dumpProteinAlignments( output_name, chk1, target, all_atoms );
   
   (*ipkt1)->dumpPocket( output_name, target, cut_binrest, ipkt2 );
   
