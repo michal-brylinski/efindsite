@@ -1,5 +1,5 @@
 # eFindSite
-eFindSite is a tool that predicts binding pockets, residues and ligands from a given protein structure and threading data. 
+eFindSite is a tool that predicts binding pockets, residues and ligands from a given protein structure by threading methods. 
 
 This README file is written by Snigdha Thumma.
 
@@ -11,7 +11,7 @@ If you find this tool useful, please cite these following papers:
 
 # Prerequisites:
 - Perl modules, which are available from CPAN
-     - For instructions on how to install Per modules, see `http://www.cpan.org/modules/INSTALL.html`
+     - For instructions on how to install Perl modules, see `http://www.cpan.org/modules/INSTALL.html`
 
 ------
 
@@ -63,6 +63,6 @@ Mandatory arguments for efindsite_scr
 - After running the eFindSite, if it worked properly, you should get 5 output files:
      - 13gsA-efindsite.pockets.dat (detailed info on predicted pockets)
      - 13gsA-efindsite.pockets.pdb (predicted pockets in PDB format)
-     - 13gsA-efindsite.alignments.dat (structure alignments of templates into the target in FASTA fromat)
+     - 13gsA-efindsite.alignments.dat (structure alignments of templates into the target in FASTA format)
      - 13gsA-efindsite.templates.pdb (template structures aligned onto the target in PDB format)
      - 13gsA-efindsite.ligands.sdf (extracted binding ligands in SDF format)
