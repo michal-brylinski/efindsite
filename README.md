@@ -28,18 +28,18 @@ If you find this tool useful, please cite these following papers:
 
 2. Then install the eFindSite template libraries from here `https://osf.io/mp343/`*( download the latest available library )* and unpack the tarball:
      - `[local]$ mkdir libraries`
-     - `[local]$ tar xzf efindsite-lib-2017-02.tar.gz -C /usr/local/libraries/`
+     - `[local]$ tar xzf efindsite-lib-2018-04.tar.gz -C /usr/local/libraries/`
      - `[local]$ tar xzf efindsite-mod-2016-06.tar.gz -C /usr/local/libraries/`
 
 3. Before running eFindSite, you need to set several environmental variables. 
      - eFindSite
-       - `[home]$ export EF_LIB=/usr/local/libraries/efindsite-lib-2017-02`
+       - `[home]$ export EF_LIB=/usr/local/libraries/efindsite-lib-2018-04`
        - `[home]$ export EF_MOD=/usr/local/libraries/efindsite-mod-2016-06`
 	   ** Make sure to export the same downloaded library from above*
  
 
 4. After the environmental variables are set, it’s time to run the eFindSite and efindsite_screen
-     - `[library]$ /usr/local/efindsite-master/bin/efindsite -s 13gsA.pdb -t 13gsA-efindsite.lst -i 13gsA.ss2 -e 13gsA.profile -o 13gsA-efindsite_test >> 13gsA-efindsite.log 2>&1`
+     - `[library]$ /usr/local/efindsite-master/bin/efindsite -s 13gsA.pdb -t 13gsA-efindsite.lst -e 13gsA.profile -o 13gsA-efindsite_test >> 13gsA-efindsite.log 2>&1`
      - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-escreen-keggcomp -o 13gsA-escreen-keggcomptest >> 13gsA-efindsite.log 2>&1`
      - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-zinc12_nr -o 13gsA-escreen-zinc12_nrtest >> 13gsA-efindsite.log 2>&1`
 
