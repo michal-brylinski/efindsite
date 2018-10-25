@@ -20,7 +20,6 @@ If you find this tool useful, please cite these following papers:
 1. First you have to download eFindSite from here `https://github.com/michal-brylinski/efindsite` and unzip: 
      - `[local]$ unzip efindsite-master.zip`
      - `[local]$ cd efindsite-master/`
-     - `[efindsite-master]$ ls`
      - `[efindsite-master]$ make`
      - `[efindsite-master]$ ls bin/`
      - `[bin]$ ./efindsite`
