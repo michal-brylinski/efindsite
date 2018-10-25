@@ -39,9 +39,9 @@ If you find this tool useful, please cite these following papers:
  
 
 4. After the environmental variables are set, it’s time to run the eFindSite and efindsite_screen
-     - `[library]$ /usr/local/efindsite-master/bin/efindsite -s 13gsA.pdb -t 13gsA-efindsite.lst -e 13gsA.profile -o 13gsA-efindsite_test >> 13gsA-efindsite.log 2>&1`
-     - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-escreen-keggcomp -o 13gsA-escreen-keggcomptest >> 13gsA-efindsite.log 2>&1`
-     - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-zinc12_nr -o 13gsA-escreen-zinc12_nrtest >> 13gsA-efindsite.log 2>&1`
+     - `[library]$ /usr/local/efindsite-master/bin/efindsite -s 13gsA.pdb -t 13gsA-efindsite.lst -e 13gsA.profile -o 13gsA-efindsite_test`
+     - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-escreen-keggcomp -o 13gsA-escreen-keggcomptest`
+     - `[library]$ /usr/local/efindsite-master/bin/efindsite_screen -p 13gsA-efindsite.pockets.dat -s 13gsA-zinc12_nr -o 13gsA-escreen-zinc12_nrtest`
 
 ------
 
