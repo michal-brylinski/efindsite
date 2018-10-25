@@ -35,8 +35,6 @@ If you find this tool useful, please cite these following papers:
      - eFindSite
        - `[home]$ export EF_LIB=/usr/local/libraries/efindsite-lib-2018-04`
        - `[home]$ export EF_MOD=/usr/local/libraries/efindsite-mod-2016-06`
-	   ** Make sure to export the same downloaded library from above*
- 
 
 4. After the environmental variables are set, it’s time to run the eFindSite and efindsite_screen
      - `[library]$ /usr/local/efindsite-master/bin/efindsite -s 13gsA.pdb -t 13gsA-efindsite.lst -e 13gsA.profile -o 13gsA-efindsite_test`
